@@ -1,0 +1,19 @@
+name = "template_name"
+version = "1.0.0"
+
+[triggers]
+crons = ["*/2 * * * *"]
+
+[deployment]
+nodes = 4
+permissions = []
+
+[build]
+dir = "build"
+entry = "template_name-debug.wasm"
+command = "npm run build:debug"
+
+[build_release]
+dir = "build"
+entry = "template_name-release.wasm"
+command = "npm run build:release"

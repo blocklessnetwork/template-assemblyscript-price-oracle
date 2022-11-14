@@ -1,0 +1,17 @@
+{
+  "name": "template-price-oracle_contracts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "APACHE-2.0",
+  "scripts": {
+    "test": "npx hardhat test",
+    "node": "npx hardhat node --watch",
+    "dev:app": "cd app && yarn dev"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.1",
+    "dotenv": "^16.0.3",
+    "ethers": "^5.0.0",
+    "hardhat": "^2.10.1"
+  }
+}

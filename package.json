@@ -1,0 +1,32 @@
+{
+  "name": "template-price-oracle",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "APACHE-2.0",
+  "private": "false",
+  "scripts": {
+    "clean": "rm -rf build",
+    "build:release": "npm run clean; asc assembly/index.ts --target release",
+    "build:debug": "npm run clean; asc assembly/index.ts --target debug",
+    "start:cron": "npx ts-node scripts/_cron.ts"
+  },
+  "dependencies": {
+    "@blockless/sdk": "https://github.com/blocklessnetwork/sdk-assemblyscript#3c936b93b487b1e35e4a962cca68e53ec2725300",
+    "as-bignum": "^0.2.23",
+    "as-wasi": "^0.4.6",
+    "assemblyscript": "^0.20.10",
+    "wasi": "^0.0.6"
+  },
+  "devDependencies": {
+    "@types/node-cron": "^3.0.5",
+    "node-cron": "^3.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  },
+  "bls": {
+    "functionId": "blockless-function_price-oracle-template-1.0.0",
+    "manifest": {
+      "contentType": "json"
+    }
+  }
+}
