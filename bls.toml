@@ -10,10 +10,10 @@ permissions = []
 
 [build]
 dir = "build"
-entry = "template_name-debug.wasm"
+entry = "template_name_debug.wasm"
 command = "npm run build:debug"
 
 [build_release]
 dir = "build"
-entry = "template_name-release.wasm"
+entry = "template_name.wasm"
 command = "npm run build:release"
