@@ -1,32 +1,35 @@
 import "wasi"
-import Env from "./utils/env"
-import { Stdin, StdinCommand } from "./utils/stdin"
+import { FeedBuilder, Sources, RedisStorage } from "@blockless/oracle-toolkit"
+import { memory } from "@blockless/sdk"
 
-import runAggregate from "./lib/aggregate"
-import runReport from "./lib/report"
+const oracleFeed = new FeedBuilder("CUSD", "Coin98 Dollar")
+  .setDescription("CUSD price feed for Efficiency DAO, powered by Blockless")
 
-/**
- * Execute the primary function for the Price Oracle
- * 
- * @output Function response in JSON
- */
-function main(): void {
-  // Load Environment
-  Env.initalize()
+// Add Sources
+oracleFeed.addSource(
+  new Sources.BaryonExchangeBSC(
+    "{{CONTRACT_ID}}",
+    new Sources.PairToken(
+      0,
+      "BUSD",
+      "{{BUSD_CONTRACT_ID}}"
+    ),
+    new Sources.PairToken(
+      1,
+      "CUSD",
+      "{{CUSD_CONTRACT_ID}}"
+    )
+  )
+)
 
-  // Load Stdin
-  Stdin.initalize()
+// Set data aggreagation and provide data storage
+oracleFeed.setAggregation(
+  "twap",
+  new RedisStorage(
+    memory.EnvVars.get("STORAGE_ENDPOINT"),
+    memory.EnvVars.get("STORAGE_ACCESS_TOKEN")
+  )
+)
 
-  // Route Command Function
-  switch (Stdin.COMMAND) {
-    case StdinCommand.AGGREGATE:
-      runAggregate()
-      break
-
-    case StdinCommand.REPORT:
-      runReport()
-      break
-  }
-}
-
-main()
+// Serve
+oracleFeed.serve()
